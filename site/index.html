@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Conquest Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Atlas Conquest</a>
+      <div class="nav-links">
+        <a href="#overview" class="nav-link">Overview</a>
+        <a href="#commanders" class="nav-link">Commanders</a>
+        <a href="#cards" class="nav-link">Cards</a>
+        <a href="#meta" class="nav-link">Meta</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <p class="hero-label">Game Analytics</p>
+      <h1 class="hero-title">Atlas Conquest</h1>
+      <p class="hero-subtitle">Tracking the metagame across every match, deck, and commander.</p>
+      <div class="hero-meta">
+        <span class="hero-stat" id="hero-matches">-- matches</span>
+        <span class="hero-divider"></span>
+        <span class="hero-stat" id="hero-players">-- players</span>
+        <span class="hero-divider"></span>
+        <span class="hero-stat" id="hero-updated">Last updated: --</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Overview Section -->
+  <section id="overview" class="section">
+    <div class="container">
+      <h2 class="section-title">Overview</h2>
+      <div class="card-grid">
+
+        <div class="stat-card">
+          <span class="stat-label">Total Matches</span>
+          <span class="stat-value" id="stat-matches">--</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Unique Players</span>
+          <span class="stat-value" id="stat-players">--</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Unique Cards Played</span>
+          <span class="stat-value" id="stat-cards">--</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Most Popular Commander</span>
+          <span class="stat-value" id="stat-top-commander">--</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Commander Section -->
+  <section id="commanders" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Commander Winrates</h2>
+      <p class="section-desc">Win percentage by commander across all recorded matches.</p>
+
+      <div class="chart-container">
+        <canvas id="commander-chart"></canvas>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table" id="commander-table">
+          <thead>
+            <tr>
+              <th>Commander</th>
+              <th>Faction</th>
+              <th>Matches</th>
+              <th>Wins</th>
+              <th>Winrate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="placeholder-row">
+              <td colspan="5">Awaiting data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <section id="cards" class="section">
+    <div class="container">
+      <h2 class="section-title">Card Analytics</h2>
+      <p class="section-desc">Most played cards and their impact on match outcomes.</p>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-faction="all">All</button>
+        <button class="filter-btn" data-faction="skaal">Skaal</button>
+        <button class="filter-btn" data-faction="grenalia">Grenalia</button>
+        <button class="filter-btn" data-faction="lucia">Lucia</button>
+        <button class="filter-btn" data-faction="neutral">Neutral</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table" id="card-table">
+          <thead>
+            <tr>
+              <th>Card</th>
+              <th>Faction</th>
+              <th>Type</th>
+              <th>Play Rate</th>
+              <th>Winrate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="placeholder-row">
+              <td colspan="5">Awaiting data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meta Section -->
+  <section id="meta" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Meta Trends</h2>
+      <p class="section-desc">How the metagame evolves over time.</p>
+
+      <div class="chart-container">
+        <canvas id="meta-chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">Atlas Conquest Analytics &mdash; Updated daily from game data.</p>
+      <p class="footer-text footer-muted">Not affiliated with the Atlas Conquest development team. Built for the community.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

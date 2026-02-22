@@ -1,0 +1,430 @@
+/* === Atlas Conquest Analytics — Design System === */
+
+:root {
+  /* Base */
+  --bg: #FFFFFF;
+  --bg-subtle: #F7F7F8;
+  --bg-inset: #EDEDF0;
+  --text: #0D0D0D;
+  --text-secondary: #6E6E80;
+  --border: #E5E5E5;
+
+  /* Faction accents */
+  --skaal: #C44536;
+  --grenalia: #3A7D44;
+  --lucia: #D4A843;
+  --neutral: #A89078;
+
+  /* Semantic */
+  --positive: #3A7D44;
+  --negative: #C44536;
+
+  /* Layout */
+  --max-width: 1200px;
+  --nav-height: 60px;
+}
+
+/* === Reset === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* === Container === */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* === Navigation === */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--text);
+}
+
+/* === Hero === */
+.hero {
+  padding: 6rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin-bottom: 2rem;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-stat {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.hero-divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+/* === Sections === */
+.section {
+  padding: 5rem 0;
+}
+
+.section-alt {
+  background: var(--bg-subtle);
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.section-desc {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  max-width: 540px;
+}
+
+/* === Stat Cards === */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* === Filter Bar === */
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--text-secondary);
+  color: var(--text);
+}
+
+.filter-btn.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.filter-btn[data-faction="skaal"].active {
+  background: var(--skaal);
+  border-color: var(--skaal);
+}
+
+.filter-btn[data-faction="grenalia"].active {
+  background: var(--grenalia);
+  border-color: var(--grenalia);
+}
+
+.filter-btn[data-faction="lucia"].active {
+  background: var(--lucia);
+  border-color: var(--lucia);
+}
+
+.filter-btn[data-faction="neutral"].active {
+  background: var(--neutral);
+  border-color: var(--neutral);
+}
+
+/* === Data Table === */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.data-table thead {
+  background: var(--bg-subtle);
+}
+
+.data-table th {
+  padding: 0.875rem 1.25rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: var(--bg-subtle);
+}
+
+.placeholder-row td {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 3rem 1.25rem;
+}
+
+/* Faction badge */
+.faction-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.faction-badge.skaal {
+  background: #C445361A;
+  color: var(--skaal);
+}
+
+.faction-badge.grenalia {
+  background: #3A7D441A;
+  color: var(--grenalia);
+}
+
+.faction-badge.lucia {
+  background: #D4A8431A;
+  color: var(--lucia);
+}
+
+.faction-badge.neutral {
+  background: #A890781A;
+  color: var(--neutral);
+}
+
+/* Winrate coloring */
+.winrate-positive {
+  color: var(--positive);
+  font-weight: 600;
+}
+
+.winrate-negative {
+  color: var(--negative);
+  font-weight: 600;
+}
+
+.winrate-neutral {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* === Charts === */
+.chart-container {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+/* === Footer === */
+.footer {
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.footer-muted {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--bg-inset);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .hero-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .hero-divider {
+    display: none;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.8125rem;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
