@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cards — Atlas Conquest Analytics</title>
+  <title>Mulligan — Atlas Conquest Analytics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/modals.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/tooltips.css">
   <link rel="stylesheet" href="css/cards.css">
@@ -36,12 +35,12 @@
   <!-- Hero (compact) -->
   <header class="hero hero-compact">
     <div class="container">
-      <h1 class="hero-title">Card Analytics</h1>
-      <p class="hero-subtitle">Most played cards and their impact on match outcomes.</p>
+      <h1 class="hero-title">Mulligan Analysis</h1>
+      <p class="hero-subtitle">Which cards should you keep in your opening hand?</p>
       <div class="hero-meta">
         <span class="hero-stat" id="hero-matches">-- matches</span>
         <span class="hero-divider"></span>
-        <span class="hero-stat" id="hero-updated">Last updated: --</span>
+        <span class="hero-stat" id="hero-mulligan-games">-- games with mulligan data</span>
       </div>
     </div>
   </header>
@@ -63,8 +62,32 @@
     </div>
   </div>
 
-  <!-- Cards Section -->
-  <section id="cards" class="section">
+  <!-- Overview Stats -->
+  <section class="section">
+    <div class="container">
+      <div class="stats-grid stats-grid-4">
+        <div class="stat-card">
+          <div class="stat-label">Mulligan Data</div>
+          <div class="stat-value" id="stat-mulligan-games">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cards Tracked</div>
+          <div class="stat-value" id="stat-cards-tracked">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Keep Rate</div>
+          <div class="stat-value" id="stat-avg-keep-rate">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Best Keep WR Delta</div>
+          <div class="stat-value" id="stat-best-delta">--</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mulligan Table -->
+  <section id="mulligan" class="section">
     <div class="container">
       <div class="filter-bar">
         <button class="filter-btn active" data-faction="all">All</button>
@@ -81,37 +104,33 @@
       </div>
 
       <div class="card-search-bar">
-        <input type="text" id="card-search" placeholder="Search by name, type, or subtype..." autocomplete="off">
+        <input type="text" id="card-search" placeholder="Search by card name..." autocomplete="off">
         <span class="search-count" id="search-count">Loading...</span>
       </div>
 
       <div class="table-wrapper">
-        <table class="data-table" id="card-table">
+        <table class="data-table" id="mulligan-table">
           <thead>
             <tr>
               <th class="sortable" data-sort="name">Card</th>
               <th class="sortable" data-sort="faction">Faction</th>
-              <th class="sortable" data-sort="type">Type</th>
-              <th class="sortable" data-sort="deck_rate">Included <span class="tooltip-icon" data-tooltip="% of decks that include this card. Sub-line shows deck count of total games.">?</span></th>
-              <th class="sortable" data-sort="drawn_winrate">Drawn WR <span class="tooltip-icon" data-tooltip="Win rate when this card is drawn. Sub-line shows sample size.">?</span></th>
-              <th class="sortable" data-sort="played_winrate">Played WR <span class="tooltip-icon" data-tooltip="Win rate when this card is played. Sub-line shows sample size.">?</span></th>
-              <th class="sortable col-deemph" data-sort="drawn_rate">Drawn Rate <span class="tooltip-icon" data-tooltip="% of games where this card was drawn. Sub-line shows game count of total.">?</span></th>
-              <th class="sortable col-deemph" data-sort="played_rate">Played Rate <span class="tooltip-icon" data-tooltip="% of games where this card was played. Sub-line shows game count of total.">?</span></th>
-              <th class="sortable" data-sort="avg_copies">Avg Copies <span class="tooltip-icon" data-tooltip="Average number of copies of this card per deck that includes it. Max 3.">?</span></th>
+              <th class="sortable" data-sort="keep_rate">Keep Rate <span class="tooltip-icon" data-tooltip="% of times this card was kept (vs returned) when seen in the opening hand. Count-weighted for duplicates.">?</span></th>
+              <th class="sortable" data-sort="norm_keep_delta">Keep Pref <span class="tooltip-icon" data-tooltip="Normalized keep preference: actual keep rate minus expected keep rate. Expected rate accounts for commander intellect and turn order (first player keeps 3, second keeps 4). Positive = actively preferred over alternatives.">?</span></th>
+              <th class="sortable" data-sort="keep_winrate">Keep WR <span class="tooltip-icon" data-tooltip="Win rate in games where this card was kept in the opening hand.">?</span></th>
+              <th class="sortable" data-sort="return_winrate">Return WR <span class="tooltip-icon" data-tooltip="Win rate in games where this card was returned/mulliganed.">?</span></th>
+              <th class="sortable" data-sort="winrate_delta">WR Delta <span class="tooltip-icon" data-tooltip="Keep WR minus Return WR. Positive = keeping this card correlates with winning. Cards with < 30 observations show '--'.">?</span></th>
+              <th class="sortable" data-sort="kept_count">Kept <span class="tooltip-icon" data-tooltip="Number of times this card was kept in the opening hand (count-weighted).">?</span></th>
+              <th class="sortable" data-sort="returned_count">Returned <span class="tooltip-icon" data-tooltip="Number of times this card was returned/mulliganed (count-weighted).">?</span></th>
+              <th class="sortable" data-sort="total_seen">Times Seen <span class="tooltip-icon" data-tooltip="Total times this card appeared in an opening hand (kept + returned).">?</span></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="placeholder-row"><td colspan="9">Loading...</td></tr>
+            <tr class="placeholder-row"><td colspan="10">Loading...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
-
-  <!-- Card Preview (hover) -->
-  <div class="card-preview" id="card-preview">
-    <img id="card-preview-img" src="" alt="">
-  </div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -122,6 +141,6 @@
   </footer>
 
   <script src="js/shared.js"></script>
-  <script src="js/cards.js"></script>
+  <script src="js/mulligan.js"></script>
 </body>
 </html>
